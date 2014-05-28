@@ -22,6 +22,7 @@ end
 
 function Elixer.UseVersion( version ) 
 	if Elixer.Version ~= version then
+		assert( Elixer.Module and Elixer.Module[version], "Elixer Utility v."..string.format("%.1f",version).." could not be found." )
 		Shared.Message( "[Elixer] Using Utility Scripts v."..string.format("%.1f",version) );
 		if Elixer.Version and Elixer.Module and Elixer.Module[Elixer.Version] then
 			for k,v in pairs( Elixer.Module[Elixer.Version] ) do
@@ -182,6 +183,7 @@ function ELIXER.AppendToEnum( tbl, key )
 		if maxVal == kTechIdMax then
 			error( "Appending another value to the TechId enum would exceed network precision constraints" )
 		end
+		rawset( tbl, rawget( tbl, maxval+2 ), nil )
 		rawset( tbl, 'Max', maxVal+2 )
 		rawset( tbl, maxVal+2, 'Max' )
 	else
